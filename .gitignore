@@ -1,0 +1,12 @@
+# .gitignore
+
+# Ignore environment variable files
+.env
+.env.prod
+.env.dev
+
+# Node.js dependencies and build files
+node_modules/
+dist/
+
+.idea
