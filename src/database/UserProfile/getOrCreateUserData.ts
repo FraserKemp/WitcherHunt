@@ -1,10 +1,9 @@
-import {dynamoDBClient} from '../../dynamo'; // Dynamo client
+import {dynamoDBClient} from '../../dynamo';
 import {GetItemCommand} from '@aws-sdk/client-dynamodb';
 import {createNewProfile} from './createNewProfile';
 import {assertIsError} from "../../utils/assertIsError";
 import {UserData} from "../../types/UserTypes";
-import {it} from "node:test";
-import {unmarshall} from "@aws-sdk/util-dynamodb"; // Importing the store function
+import {unmarshall} from "@aws-sdk/util-dynamodb";
 
 type getOrCreateUserDataError = {
     status: 'error',
@@ -19,7 +18,6 @@ type getOrCreateUserDataSuccess = {
 
 type getOrCreateUserData = getOrCreateUserDataSuccess | getOrCreateUserDataError;
 
-// Function to get user data or create if not exists
 export const getOrCreateUserData = async (userId: string, username:string): Promise<getOrCreateUserData> =>  {
     const tableName = process.env.NODE_ENV === 'prod'
         ? process.env.DYNAMODB_TABLE_PROD
@@ -34,13 +32,14 @@ export const getOrCreateUserData = async (userId: string, username:string): Prom
 
     try {
         console.log(`Searching for User ${userId} record in DB`);
-            // First, check if the user already exists in the database
+            // Check if the user already exists in the database
             const command = new GetItemCommand(params);
             const result = await dynamoDBClient.send(command);
             const item = result.Item
             if (item) {
+                // we don't want the data in the dynamo format so we will unmarshall it.
                 const data = unmarshall(item) as UserData;
-                // If user exists, return the data (optional: return the whole item)
+                // If user exists, return the data
                 console.log(`User, id:${userId}, found in the database, data: ${JSON.stringify(data)}`);
                 return {success: true, status: 'success', data: data };
             } else {
