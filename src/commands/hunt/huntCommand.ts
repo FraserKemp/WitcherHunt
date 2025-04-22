@@ -58,6 +58,7 @@ const executeHunt = async (interaction: CommandInteraction)=> {
 
     const monster = possibleMonsters[Math.floor(Math.random() * possibleMonsters.length)];
 
+    // TODO make this more similar to PokeMeow -> show how many items you have and other bits of information like the rarity.
     const row = new ActionRowBuilder<ButtonBuilder>().addComponents(
         new ButtonBuilder()
             .setCustomId('attack')

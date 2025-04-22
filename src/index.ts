@@ -3,6 +3,8 @@ import * as dotenv from 'dotenv';
 import {huntCommand, wrappedHuntCommand} from './commands/hunt/huntCommand';
 import {executeProfile, profileCommand} from "./commands/profile/profileCommand";
 
+// TODO update ReadMe with instructions on how to run this
+
 dotenv.config();
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });

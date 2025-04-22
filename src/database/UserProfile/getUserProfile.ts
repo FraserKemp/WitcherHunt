@@ -4,6 +4,7 @@ import {dynamoDBClient} from "../../dynamo";
 import {unmarshall} from "@aws-sdk/util-dynamodb";
 import {assertIsError} from "../../utils/assertIsError";
 
+// TODO make this generic as we will always have this similar structure.
 type getUserProfileDataError = {
     status: 'error',
     success: false,
