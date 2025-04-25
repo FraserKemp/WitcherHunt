@@ -2,6 +2,7 @@ import { createNewProfile } from "./createNewProfile";
 import { assertIsError } from "../../utils/assertIsError";
 import { UserData } from "../../types/UserTypes/UserTypes";
 import { getUserProfile } from "./getUserProfile";
+import { ApiResponse } from "../../types/CommonTypes";
 
 export const getOrCreateUserData = async (
   userId: string,

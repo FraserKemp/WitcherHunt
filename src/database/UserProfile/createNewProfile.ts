@@ -3,6 +3,7 @@ import { PutItemCommand } from "@aws-sdk/client-dynamodb";
 import { UserData } from "../../types/UserTypes/UserTypes";
 import { assertIsError } from "../../utils/assertIsError";
 import { defaultUserData, getDynamoUserData } from "../../data/UserData";
+import { ApiResponse } from "../../types/CommonTypes";
 
 export const createNewProfile = async (
   userId: string,

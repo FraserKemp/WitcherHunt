@@ -3,6 +3,7 @@ import { GetItemCommand } from "@aws-sdk/client-dynamodb";
 import { dynamoDBClient } from "../../dynamo";
 import { unmarshall } from "@aws-sdk/util-dynamodb";
 import { assertIsError } from "../../utils/assertIsError";
+import { ApiResponse } from "../../types/CommonTypes";
 
 export const getUserProfile = async (
   userId: string,

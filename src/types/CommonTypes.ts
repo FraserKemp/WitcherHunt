@@ -10,4 +10,4 @@ type ResponseSuccess<T> = {
   data: T;
 };
 
-type ApiResponse<T> = ResponseSuccess<T> | ResponseError;
+export type ApiResponse<T> = ResponseSuccess<T> | ResponseError;
