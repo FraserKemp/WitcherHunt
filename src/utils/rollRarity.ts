@@ -1,11 +1,15 @@
-export const rollRarity = (): string => {
-    const roll = Math.random() * 100;
-    console.log('Rarity roll: ', roll)
-    if (roll <= 0.1) return 'Deranged';
-    if (roll <= 1.0) return 'Shiny';
-    if (roll <= 5.0) return 'Legendary';
-    if (roll <= 25.0) return 'Super Rare';
-    if (roll <= 62.0) return 'Rare';
-    if (roll <= 88.0) return 'Uncommon';
-    return 'Common';
-}
+import { MonsterRarity } from "../types/MonsterTypes/MonsterTypes";
+import { Rarity } from "../Enums/Rarity";
+
+export const rollRarity = (): MonsterRarity => {
+  const roll = Math.random() * 100;
+  console.log("Rarity roll: ", roll);
+  if (roll <= 0.05) return Rarity.DERANGED;
+  if (roll <= 0.1) return Rarity.CURSED;
+  if (roll <= 1.0) return Rarity.LEGENDARY;
+  if (roll <= 25.0) return Rarity.SUPER_RARE;
+  if (roll <= 40.0) return Rarity.RARE;
+  // if (roll <= 70.0) return "uncommon";
+  if (roll <= 100.0) return Rarity.COMMON;
+  return "Common";
+};
