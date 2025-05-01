@@ -11,7 +11,7 @@ stats: { kills: 0, captures: 0, huntsCompleted: 0 },
 inventory: {
 monsterHeads: {},
 capturedMonsters: {},
-consumables: { nets: 3, silverBombs: 1, godEssence: 0 },
+items: { nets: 3, silverBombs: 1, godEssence: 0 },
 },
 createdAt: new Date().toISOString(),
 lastSeen: new Date().toISOString(),

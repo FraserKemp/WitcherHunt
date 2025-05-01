@@ -15,7 +15,7 @@ export function withUser(handler: CommandHandlerWithUser) {
 
     const exists = await checkIfUserExists(userId);
 
-    if (!exists) {
+    if (!exists && interaction.commandName !== "profile") {
       await interaction.reply({
         content:
           "❌ You don’t have a profile yet. Use `/profile` to create one!",

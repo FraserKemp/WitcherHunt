@@ -9,10 +9,11 @@ export const defaultUserData: UserData = {
   inventory: {
     monsterHeads: {}, // Initially empty map
     capturedMonsters: {}, // Initially empty map
-    consumables: {
-      nets: 0,
-      silverBombs: 0,
-      godEssence: 0,
+    items: {
+      rusty_dagger: 10,
+      steel_sword: 10,
+      silver_sword: 5,
+      binding_stone: 1,
     },
   },
   createdAt: new Date().toISOString(),
@@ -56,9 +57,20 @@ export const getDynamoUserData = (userId: string, username: string) => ({
           ),
         ),
       },
-      consumables: {
+      items: {
         M: {
-          nets: { N: String(defaultUserData.inventory.consumables.nets) }, // nets as a number
+          rusty_dagger: {
+            N: String(defaultUserData.inventory.items.rusty_dagger),
+          }, // nets as a number
+          steel_sword: {
+            N: String(defaultUserData.inventory.items.steel_sword),
+          },
+          silver_sword: {
+            N: String(defaultUserData.inventory.items.silver_sword),
+          },
+          binding_stone: {
+            N: String(defaultUserData.inventory.items.binding_stone),
+          },
         },
       },
     },

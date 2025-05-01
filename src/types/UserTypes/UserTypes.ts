@@ -1,7 +1,8 @@
-interface Consumables {
-  nets: number;
-  silverBombs: number;
-  godEssence: number;
+interface Items {
+  rusty_dagger: number;
+  steel_sword: number;
+  silver_sword: number;
+  binding_stone: number;
 }
 
 type Companion = {
@@ -38,7 +39,7 @@ type CapturedMonster = {
 interface Inventory {
   monsterHeads: Record<string, number>; // monsterId -> quantity
   capturedMonsters: Record<string, CapturedMonster>;
-  consumables: Consumables;
+  items: Items;
 }
 
 interface Stats {
@@ -51,9 +52,10 @@ export interface UserData {
   stats: Stats;
   inventory: Inventory;
   companion?: Companion;
+  roles?: string[];
   createdAt: string; // ISO string format (e.g., "2023-04-21T12:34:56.789Z")
   lastSeen: string; // ISO string format
 
-  // TODO: Implement a trophy room for each user. May be worth its own table linked to the user id
+  // TODO: For later: Implement a trophy room for each user. May be worth its own table linked to the user id
   // trophyRoom: Set<string>;
 }

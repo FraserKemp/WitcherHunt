@@ -10,218 +10,98 @@ import {
 } from "discord.js";
 import { rollRarity } from "../../utils/rollRarity";
 import { withUser } from "../commandUserWrapper";
-import { Monster, MonsterRarity } from "../../types/MonsterTypes/MonsterTypes";
 import { getMonstersByRarity } from "../../database/Monsters/getMonstersByRarity";
-
-export const commonMonsters: Monster[] = [
-  {
-    id: "001",
-    name: "Drowner",
-    rarity: "Common",
-    price: 50,
-    countInGame: 0,
-    baseStats: { attack: 0, defense: 0, hp: 0, speed: 0 },
-    type: ["Necrophage"],
-    region: "Velen",
-    loot: {},
-  },
-  {
-    id: "002",
-    name: "Ghoul",
-    rarity: "Common",
-    price: 55,
-    countInGame: 0,
-    baseStats: { attack: 0, defense: 0, hp: 0, speed: 0 },
-    type: ["Necrophage"],
-    region: "White Orchard",
-    loot: {},
-  },
-  {
-    id: "003",
-    name: "Wolf",
-    rarity: "Common",
-    price: 45,
-    countInGame: 0,
-    baseStats: { attack: 0, defense: 0, hp: 0, speed: 0 },
-    type: ["Beast"],
-    region: "Skellige",
-    loot: {},
-  },
-  {
-    id: "004",
-    name: "Wild Dog",
-    rarity: "Common",
-    price: 40,
-    countInGame: 0,
-    baseStats: { attack: 0, defense: 0, hp: 0, speed: 0 },
-    type: ["Beast"],
-    region: "Novigrad",
-    loot: {},
-  },
-  {
-    id: "005",
-    name: "Nekker",
-    rarity: "Common",
-    price: 60,
-    countInGame: 0,
-    baseStats: { attack: 0, defense: 0, hp: 0, speed: 0 },
-    type: ["Ogroid"],
-    region: "Velen",
-    loot: {},
-  },
-  {
-    id: "006",
-    name: "Endrega Worker",
-    rarity: "Common",
-    price: 65,
-    countInGame: 0,
-    baseStats: { attack: 0, defense: 0, hp: 0, speed: 0 },
-    type: ["Insectoid"],
-    region: "Velen",
-    loot: {},
-  },
-  {
-    id: "007",
-    name: "Rotfiend",
-    rarity: "Common",
-    price: 70,
-    countInGame: 0,
-    baseStats: { attack: 0, defense: 0, hp: 0, speed: 0 },
-    type: ["Necrophage"],
-    region: "Novigrad",
-    loot: {},
-  },
-  {
-    id: "008",
-    name: "Water Hag",
-    rarity: "Common",
-    price: 75,
-    countInGame: 0,
-    baseStats: { attack: 0, defense: 0, hp: 0, speed: 0 },
-    type: ["Necrophage"],
-    region: "Velen",
-    loot: {},
-  },
-  {
-    id: "009",
-    name: "Bear",
-    rarity: "Common",
-    price: 80,
-    countInGame: 0,
-    baseStats: { attack: 0, defense: 0, hp: 0, speed: 0 },
-    type: ["Beast"],
-    region: "Skellige",
-    loot: {},
-  },
-  {
-    id: "010",
-    name: "Warg",
-    rarity: "Common",
-    price: 85,
-    countInGame: 0,
-    baseStats: { attack: 0, defense: 0, hp: 0, speed: 0 },
-    type: ["Beast"],
-    region: "Skellige",
-    loot: {},
-  },
-];
-
-type AttackResult = {
-  success: boolean;
-  roll: number;
-  threshold: number;
-  message: string;
-};
-
-export const resolveAttack = (monster: Monster): AttackResult => {
-  const roll = Math.floor(Math.random() * 100);
-  console.log("Attack roll: ", roll);
-  const thresholdMap: Record<string, number> = {
-    Common: 70,
-    Uncommon: 60,
-    Rare: 37,
-    "Super Rare": 20,
-    Legendary: 5,
-    Cursed: 4,
-    Deranged: 3,
-  };
-  const threshold = thresholdMap[monster.rarity] ?? 50;
-
-  const success = roll >= threshold;
-  const message = success
-    ? `💥 You killed the ${monster.name} monster! (Roll: ${roll} / Needed: ${threshold})`
-    : `❌ The ${monster.name} monster dodged your attack! (Roll: ${roll} / Needed: ${threshold})`;
-
-  return { success, roll, threshold, message };
-};
+import { UserData } from "../../types/UserTypes/UserTypes";
+import { KillItem, killItems } from "../../Enums/Items";
 
 export const huntCommand = new SlashCommandBuilder()
   .setName("hunt")
   .setDescription("Go on a monster hunt!");
 
-const executeHunt = async (interaction: CommandInteraction) => {
-  const rarity: MonsterRarity = rollRarity();
+const executeHunt = async (
+  interaction: CommandInteraction,
+  userData: UserData,
+) => {
+  const rarity = rollRarity();
   console.log(rarity, "RARITY HERE");
-  const monstersForRarity = getMonstersByRarity(rarity);
-
-  // Get a monster of that rarity
-  const possibleMonsters = commonMonsters.filter(
-    (m) => m.rarity.toLocaleLowerCase() === rarity.toLocaleLowerCase(),
+  const monstersForRarityResponse = await getMonstersByRarity(
+    rarity.monsterRarity,
   );
-  if (possibleMonsters.length === 0) {
-    await interaction.reply(`No monsters found for rarity: ${rarity}`);
+
+  const username = interaction.user.username;
+  const specialRarity = rarity.specialRarity;
+
+  if (!monstersForRarityResponse.success) {
+    await interaction.reply(
+      `Error occurred fetching monsters for rarity: ${
+        specialRarity ?? rarity
+      }\n\nPlease try again`,
+    );
     return;
   }
 
-  const monster =
-    possibleMonsters[Math.floor(Math.random() * possibleMonsters.length)];
+  if (monstersForRarityResponse.data.length === 0) {
+    await interaction.reply(
+      `No monsters found for rarity: ${specialRarity ?? rarity}`,
+    );
+    return;
+  }
 
-  // TODO make this more similar to PokeMeow -> show how many items you have and other bits of information like the rarity.
+  const monsterData = monstersForRarityResponse.data;
 
+  const monster = monsterData[Math.floor(Math.random() * monsterData.length)];
+
+  console.log(monster);
+
+  // TODO make different descriptions based on the monster type
+
+  const userItems = userData.inventory.items;
+  const footerTextItems = `=========Items left=========
+Rusty dagger: ${userItems.rusty_dagger} | Steel sword ${userItems.steel_sword}
+Silver sword: ${userItems.silver_sword} | Binding Stone: ${userItems.binding_stone}`;
+
+  // TODO update user region once travelling is implemented
+  // TODO update title to ask them to pick a emoji item
   const embed = new EmbedBuilder()
-    .setColor(0x00ae86)
-    .setAuthor({
-      name: "Some name",
-      iconURL: "https://i.imgur.com/AfFp7pu.png",
-      url: "https://discord.js.org",
-    })
-    .setTitle("🐾 A wild Drowner has appeared!")
-    .setDescription("This creature seems aggressive... What will you do?")
-    .setThumbnail("https://example.com/drowner.gif") // or `.setImage()` for bigger image
-    .addFields(
-      {
-        name: "",
-        value: `Rarity: ${rarity}\nRegion: Velen`,
-        inline: false,
-      },
-      {
-        name: "",
-        value:
-          "======Items left======\nRusty dagger: 10 | Steel sword 19\nSilver sword:1 | Binding Stone: 0",
-        inline: false,
-      },
+    .setTitle(
+      `<:geralt_character:1367212610835058748> **${username}** hunted a wild ${
+        specialRarity ?? ""
+      }${monster.name}! `,
     )
-    .setFooter({ text: "Use buttons below to interact!" });
+    .setDescription("This beast darkens the skies. Will you attack or trap it?")
+    .setImage(`attachment://archgriffen_body.png`) // sits cleanly in the center
+    .setFooter({
+      text: `Rarity: ${
+        specialRarity ?? rarity.monsterRarity
+      }\nType: Draconid\nCurrent region: Novigrad\nMonster region: ${
+        monster.region
+      }\n\n${footerTextItems}\n\nChoose an action`,
+    });
 
   const row = new ActionRowBuilder<ButtonBuilder>().addComponents(
     new ButtonBuilder()
       .setCustomId("attack")
       .setLabel("⚔️")
       .setStyle(ButtonStyle.Secondary),
-    new ButtonBuilder()
-      .setCustomId("capture")
-      .setLabel("🪢")
-      .setStyle(ButtonStyle.Secondary),
+    // new ButtonBuilder()
+    //   .setCustomId("capture")
+    //   .setLabel("🪢")
+    //   .setStyle(ButtonStyle.Secondary),
   );
 
   await interaction.reply({
-    content: `👹 A wild **${monster.name}** appeared! (Rarity: ${monster.rarity})\nChoose your action:`,
+    content: `A wild **${monster.name}** appeared! (Rarity: ${monster.rarity})\nChoose your action:`,
     embeds: [embed],
     components: [row],
+    files: [
+      {
+        attachment: "src/assets/images/archgriffen_body.png",
+        name: "archgriffen_body.png",
+      },
+    ],
     ephemeral: false,
   });
 
-  // Create a message component collector for this interaction
   const message = await interaction.fetchReply();
 
   const collector = message.createMessageComponentCollector({
@@ -240,18 +120,95 @@ const executeHunt = async (interaction: CommandInteraction) => {
     }
 
     if (btnInteraction.customId === "attack") {
-      const result = resolveAttack(monster);
+      const itemOrder = [
+        "rusty_dagger",
+        "steel_sword",
+        "silver_sword",
+        "binding_stone",
+      ];
+
+      const availableItems = Object.entries(userData.inventory.items)
+        .filter(([itemId, count]) => count > 0 && itemOrder.includes(itemId)) // keep only valid items in desired order
+        .map(([itemId]) => killItems[itemId])
+        .sort((a, b) => itemOrder.indexOf(a.id) - itemOrder.indexOf(b.id));
+
+      if (availableItems.length === 0) {
+        return await btnInteraction.update({
+          content: "You don’t have any items to attack with!",
+          components: [],
+        });
+      }
+
+      const buttons = availableItems.map((item) =>
+        new ButtonBuilder()
+          .setCustomId(`${item.id}`)
+          .setEmoji(item.emoji)
+          .setStyle(ButtonStyle.Secondary),
+      );
+
+      const row = new ActionRowBuilder<ButtonBuilder>().addComponents(
+        ...buttons,
+      );
 
       await btnInteraction.update({
-        content: result.message,
-        components: [],
+        content: "🗡️ Choose your item to attack with:",
+        components: [row],
       });
-    }
 
-    if (btnInteraction.customId === "capture") {
-      await btnInteraction.update({
-        content: `🪢 You tried to capture **${monster.name}** (${monster.rarity}) — capture logic coming soon!`,
-        components: [],
+      const itemCollector =
+        btnInteraction.message.createMessageComponentCollector({
+          componentType: ComponentType.Button,
+          time: 15000,
+          max: 1,
+        });
+
+      itemCollector.on("collect", async (itemInteraction) => {
+        if (itemInteraction.user.id !== interaction.user.id) {
+          return itemInteraction.reply({
+            content: "This isn’t your hunt!",
+            ephemeral: true,
+          });
+        }
+
+        const item: KillItem = killItems[itemInteraction.customId];
+
+        if (!item) {
+          return itemInteraction.reply({
+            content: "Invalid item selected.",
+            ephemeral: true,
+          });
+        }
+
+        // Decrement inventory here if you're saving to DB
+        // await updateUserInventory(...)
+
+        // used item item.name
+
+        const roll = Math.random() * 100;
+        const chance = item.killChances[monster.rarity];
+        const killed = roll <= chance;
+
+        const resultButton = new ButtonBuilder()
+          .setCustomId("result")
+          .setEmoji(killed ? "✅" : "❌")
+          .setStyle(ButtonStyle.Secondary);
+
+        const resultRow = new ActionRowBuilder<ButtonBuilder>().addComponents(
+          resultButton,
+        );
+
+        const updatedEmbed = EmbedBuilder.from(embed)
+          .setTitle(killed ? "✅ Monster Defeated!" : "❌ Monster Escaped!")
+          .setDescription(
+            killed
+              ? `${item.name} landed the blow. The ${monster.name} is now dead!`
+              : `${item.name} missed — the monster got away!`,
+          );
+
+        await itemInteraction.update({
+          embeds: [updatedEmbed],
+          components: [resultRow],
+        });
       });
     }
   });
@@ -259,7 +216,7 @@ const executeHunt = async (interaction: CommandInteraction) => {
   collector.on("end", async (collected) => {
     if (collected.size === 0) {
       await interaction.editReply({
-        content: `⏳ You missed your chance to act! The **${monster.name}** escaped.`,
+        content: `⏳ You missed your chance to act! The ${monster.name} fled.`,
         components: [],
       });
     }
