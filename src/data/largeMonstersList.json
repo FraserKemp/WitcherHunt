@@ -1,66 +1,75 @@
 {
+  "count": {
+    "common": "7",
+    "uncommon": "4",
+    "rare": "4",
+    "super_rare": "3",
+    "legendary" : "2"
+  },
   "Necrophages": [
-    { "name": "Drowner", "region": "Velen", "rarity": "Common" },
-    { "name": "Drowned dead", "region": "Velen", "rarity": "Rare" },
+    { "name": "Drowner", "region": "Ubiquitous", "rarity": "Common" }, // ✅
+    { "name": "Drowned dead", "region": "Velen", "rarity": "Rare" }, // ✅
     {
-      "name": "Mucknixer (Monster Slayer)",
+      "name": "Mucknixer (Monster Slayer)", // ✅
       "region": "Velen",
       "rarity": "Super Rare"
     },
-    { "name": "Ghoul", "region": "Velen", "rarity": "Common" },
-    { "name": "Alghoul", "region": "Velen", "rarity": "Common" },
+    { "name": "Ghoul", "region": "Velen", "rarity": "Common" }, // ✅
+    { "name": "Alghoul", "region": "Velen", "rarity": "Common" }, // ✅
 
-    { "name": "Grave Hag", "region": "Velen", "rarity": "Uncommon" },
-    { "name": "Mourntart", "region": "Velen", "rarity": "Rare" },
+    { "name": "Grave Hag", "region": "Velen", "rarity": "Rare" }, // ✅
+    { "name": "Mourntart", "region": "Velen", "rarity": "Legendary" }, // ✅
 
-    { "name": "Water Hag", "region": "Velen", "rarity": "Uncommon" },
+    { "name": "Water Hag", "region": "Velen", "rarity": "Uncommon" }, // ✅
 
-    { "name": "Rotfiend", "region": "Novigrad", "rarity": "rare" },
+    { "name": "Rotfiend", "region": "Novigrad", "rarity": "rare" }, // ✅
     {
-      "name": "Greater Rotfiend",
+      "name": "Greater Rotfiend",  // ✅
       "region": "Novigrad",
       "rarity": "Super Rare"
     },
 
-    { "name": "Devourer", "region": "Novigrad", "rarity": "Common" },
+    { "name": "Devourer", "region": "Novigrad", "rarity": "Common" }, // ✅
     {
-      "name": "Garkain (in necrophage form, Gwent)",
+      "name": "Garkain (in necrophage form, Gwent)", // ✅
       "region": "Toussaint",
       "rarity": "Uncommon"
     },
 
     {
-      "name": "Foglet",
+      "name": "Foglet", // ✅
       "region": "Velen",
       "notes": "A spectral necrophage that thrives in foggy conditions, often attacking travelers lost in the mist.",
       "rarity": "Rare"
     },
     {
-      "name": "Ignis Fatuus",
+      "name": "Ignis Fatuus", // ✅
       "region": "Velen",
       "notes": "It is an ancient and powerful foglet living in a cave located in the bogs of Velen.",
       "rarity": "Legendary"
     },
 
     {
-      "name": "Nekker",
+      "name": "Nekker", // ✅
       "region": "Velen",
       "notes": "Small, agile necrophages that attack in swarms, overwhelming their prey with sheer numbers.",
       "rarity": ""
     },
     {
-      "name": "Nekker warrior",
+      "name": "Nekker warrior",  // ✅
       "region": "Velen",
       "notes": "Small, agile necrophages that attack in swarms, overwhelming their prey with sheer numbers."
     },
     {
-      "common": ""
-    }
+      "name": "Hagubman",  // ✅
+      "region": "Skellige Isles"
+    },
+    { "name": "Wight", "region": "Toussaint" } // ✅
   ],
   "Specters": [
-    { "name": "Noonwraith", "region": "Velen" },
+    { "name": "Noonwraith", "region": "Velen" }, // ✅
     {
-      "name": "Devil by the Well",
+      "name": "Devil by the Well",  // ✅
       "region": "Velen",
       "note": "Devil by the Well is a unique noonwraith"
     },
@@ -75,7 +84,11 @@
     { "name": "Wraith", "region": "Velen" },
     { "name": "Penitent", "region": "Velen", "note": "variation of wraith" },
     { "name": "Midnight Wraith", "region": "Velen" },
-    { "name": "Lady Midday", "region": "Velen", "note": "is a mythical character common to the various Slavic countries of Eastern Europe." },
+    {
+      "name": "Lady Midday",
+      "region": "Velen",
+      "note": "is a mythical character common to the various Slavic countries of Eastern Europe."
+    },
     { "name": "Phantom", "region": "Skellige" },
     {
       "name": "Frightener",
@@ -97,14 +110,24 @@
     { "name": "Werewolf", "region": "Velen" },
     { "name": "Ulfhedinn", "region": "Skellige" },
     { "name": "Voref", "region": "Skellige" },
-    { "name": "Botchling", "region": "Velen", "notes": "Voref is a wolf-creature in the Swamp. He is accompanied by other wolves, presumably his pack, but stands out from the pack because of his relatively large size" },
+    {
+      "name": "Botchling",
+      "region": "Velen",
+      "notes": "Voref is a wolf-creature in the Swamp. He is accompanied by other wolves, presumably his pack, but stands out from the pack because of his relatively large size"
+    },
     { "name": "Lubberkin", "region": "Velen" },
     { "name": "Maalshee", "region": "Skellige" },
-    { "name": "berserkers (Werebear)", "region": "Skellige" }
+    { "name": "berserkers (Werebear)", "region": "Skellige" },
+    { "name": "Archespore", "region": "Skellige" }
   ],
   "Draconids": [
     { "name": "Forktail", "region": "Skellige" },
-    { "name": "The Dragon of Fyresdal", "region": "Skellige", "notes": "The Dragon of Fyresdal is a powerful forktail" },
+    { "name": "Dragon", "region": "Skellige" },
+    {
+      "name": "The Dragon of Fyresdal",
+      "region": "Skellige",
+      "notes": "The Dragon of Fyresdal is a powerful forktail"
+    },
     { "name": "Wyvern", "region": "Velen" },
     { "name": "Royal Wyvern", "region": "Velen" },
     { "name": "Basilisk", "region": "Toussaint" },
@@ -115,6 +138,7 @@
     },
 
     { "name": "Cockatrice", "region": "Velen" },
+    { "name": "Shrieker", "region": "Velen", "note": "Shrieker is a powerful cockatrice living inside a cave located on the outskirts of Crow's Perch.\n" },
     { "name": "Slyzard", "region": "Toussaint" },
     { "name": "Slyzard Matriarch", "region": "Toussaint" },
 
@@ -134,26 +158,37 @@
     {
       "name": "The Toad Prince",
       "region": "Novigrad"
-    },
-    {
-      "name": "Ice Giant",
-      "region": "Skellige",
-      "notes": "A towering giant from the icy wastes, wielding immense strength and resilience."
     }
   ],
   "Relicts": [
     { "name": "Leshen", "region": "Velen" },
     { "name": "Leshen Hound", "region": "Velen" },
-    { "name": "Kernun", "region": "Novigrad", "note": "Kernun is a powerful, old leshen who established its presence in the woods just outside Novigrad" },
-    { "name": "Woodland Spirit", "region": "Novigrad", "note": "Woodland Spirit is a very old and very powerful leshen worshiped by the elders of the village of Fayrlund" },
+    {
+      "name": "Kernun",
+      "region": "Novigrad",
+      "note": "Kernun is a powerful, old leshen who established its presence in the woods just outside Novigrad"
+    },
+    {
+      "name": "Woodland Spirit",
+      "region": "Novigrad",
+      "note": "Woodland Spirit is a very old and very powerful leshen worshiped by the elders of the village of Fayrlund"
+    },
     { "name": "Ancient Leshen", "region": "Skellige" },
     { "name": "Fiend", "region": "Velen" },
     { "name": "Chort", "region": "Velen" },
     { "name": "Howler", "region": "Velen" },
     { "name": "Sylvan", "region": "Skellige" },
     { "name": "Spriggan (Gwent card based)", "region": "Skellige" },
-    { "name": "Spriggan Hound", "region": "Skellige", "note": "It is a variation of the Leshen Hound" },
-    { "name": "Grottore", "region": "Skellige", "note": "Grottore is a strong spriggan" },
+    {
+      "name": "Spriggan Hound",
+      "region": "Skellige",
+      "note": "It is a variation of the Leshen Hound"
+    },
+    {
+      "name": "Grottore",
+      "region": "Skellige",
+      "note": "Grottore is a strong spriggan"
+    },
     { "name": "Woodland Spirit", "region": "Skellige" },
     {
       "name": "Draug",
@@ -162,53 +197,72 @@
     }
   ],
 
-
   "Vampires": [
     { "name": "Ekimmara", "region": "Velen" },
-    { "name": "Garkain (Vampire variant)", "region": "Toussaint" },
-    { "name": "Fleder", "region": "Toussaint" },
-    { "name": "Bruxa", "region": "Toussaint" },
-    { "name": "Katakan", "region": "Novigrad" },
-    { "name": "Alp", "region": "Toussaint" },
-    { "name": "Higher Vampire", "region": "Toussaint" },
     {
-      "name": "Dettlaff van der Eretein (specific Higher Vampire)",
-      "region": "Toussaint"
+      "name": "Sarasti",
+      "region": "Velen",
+      "notes": "Sarasti is a very old and very powerful ekimmara resting inside an elven ruin beneath Byways, Velen"
     },
     {
-      "name": "Vampire: Bruxa",
+      "name": "Garkain (Vampire variant)",
       "region": "Toussaint",
-      "notes": "A powerful vampire variant known for its agility and piercing shrieks."
+      "notes": "A grotesque vampire variant with a venomous bite and a penchant for ambushes."
     },
     {
-      "name": "Vampire: Fleder",
+      "name": "Fleder",
       "region": "Toussaint",
       "notes": "A bat-like vampire that relies on brute strength and ferocity."
     },
     {
-      "name": "Vampire: Garkain",
+      "name": "Bruxa",
       "region": "Toussaint",
-      "notes": "A grotesque vampire variant with a venomous bite and a penchant for ambushes."
+      "notes": "Bruxa is a very powerful type of vampire that takes on the appearance of a dark-haired, young human, most often female, but whose natural form is that of a large, black bat with sharp fangs and claws"
+    },
+    {
+      "name": "Katakan",
+      "region": "Novigrad",
+      "notes": "Katakans are a vampire race found in the Northern Kingdoms"
+    },
+    {
+      "name": "Alp",
+      "region": "Toussaint",
+      "notes": "Alps or alpors are members of a vampiric race which inhabits the lands of the Northern Kingdoms"
+    },
+    {
+      "name": "Higher Vampire",
+      "region": "Toussaint",
+      "notes": "Higher Vampires are an incredibly rare form of vampire and are often mistaken for their lesser brethren"
+    },
+    {
+      "name": "Dettlaff van der Eretein (specific Higher Vampire)",
+      "region": "Toussaint"
     }
   ],
   "Beasts": [
     { "name": "Wolves", "region": "Skellige" },
     { "name": "Wild Dogs", "region": "Velen" },
     { "name": "Bears", "region": "Skellige" },
+    { "name": "Troll", "region": "Velen" },
     { "name": "Cave Troll", "region": "Velen" },
     { "name": "Rock Troll", "region": "Velen" },
     { "name": "Ice Troll", "region": "Skellige" },
     { "name": "Panthers", "region": "Toussaint" },
     { "name": "Wolves of Crookback Bog", "region": "Velen" },
     { "name": "Armored Hound", "region": "Gwent (fictional)" },
+    { "name": "Giant", "region": "Skellige" },
+    { "name": "Barghest" },
     {
-      "name": "Schirrú (mutant hounds from Gwent lore)",
-      "region": "Gwent (fictional)"
+      "name": "Ice Giant",
+      "region": "Skellige",
+      "notes": "A towering giant from the icy wastes, wielding immense strength and resilience."
     }
   ],
   "Insectoids": [
+    { "name": "Endrega guard", "region": "Velen" },
     { "name": "Endrega Worker", "region": "Velen" },
     { "name": "Endrega Warrior", "region": "Velen" },
+    { "name": "Endrega drone", "region": "Velen" },
     { "name": "Endrega Queen", "region": "Velen" },
     { "name": "Arachas", "region": "Velen" },
     { "name": "Arachas Behemoth", "region": "Velen" },
@@ -230,20 +284,11 @@
   ],
   "Hybrids": [
     { "name": "Harpy", "region": "Skellige" },
+    { "name": "Harpy queen", "region": "Skellige" },
+    { "name": "Celaeno harpy", "region": "Skellige" },
+    { "name": "Erynia harpy", "region": "Skellige" },
     { "name": "Siren", "region": "Skellige" },
-    { "name": "Ekhidna", "region": "Skellige" },
-    { "name": "Shrieker", "region": "Velen" },
-    {
-      "name": "Cockatrice (can be considered hybrid/reptilian)",
-      "region": "Velen"
-    }
-  ],
-  "Constructs / Magical Creatures": [
-    { "name": "Hym", "region": "Skellige" },
-    { "name": "Animated Armor (Witcher 2)", "region": "Kaedwen" },
-    { "name": "Sentinel (e.g., Ofir guards)", "region": "Ofir" },
-    { "name": "Gargoyle", "region": "Kaer Morhen" },
-    { "name": "Golem (could overlap)", "region": "Kaer Morhen" }
+    { "name": "Ekhidna", "region": "Skellige" }
   ],
   "Humanoids (non-monster but enemy types)": [
     { "name": "Bandits", "region": "Velen" },
@@ -251,12 +296,12 @@
     { "name": "Pirates", "region": "Skellige" },
     { "name": "Ofieri", "region": "Ofir" },
     { "name": "Wild Hunt Warriors", "region": "Tir ná Lia" },
-    { "name": "Crones of Crookback Bog (magical beings)", "region": "Velen" }
+    { "name": "Crones of Crookback Bog (magical beings)", "region": "Velen" },
+    { "name": "Royal Redanian Foot Soldier", "region": "Velen" }
   ],
   "Unique and Rare Creatures (Books + TTRPG + Gwent + Monster Slayer)": [
     { "name": "Striga", "region": "Temeria" },
     { "name": "Zeugl", "region": "Novigrad" },
-    { "name": "Stryga", "region": "Temeria" },
     { "name": "Doppler", "region": "Novigrad" },
     { "name": "Manticore", "region": "Ofir" },
     { "name": "Myriapod", "region": "Toussaint" },
@@ -264,10 +309,11 @@
     { "name": "Broxa (older vampire lore)", "region": "Toussaint" },
     { "name": "Adda the White (cursed striga form)", "region": "Temeria" },
     { "name": "Caretaker (Heart of Stone DLC)", "region": "Novigrad" },
-    { "name": "Phantom of the Trade Route", "region": "Velen" },
+    { "name": "Phantom of the Amphitheater" },
     { "name": "Utopiec (Drowner mutation, Monster Slayer)", "region": "Velen" },
     { "name": "Fugas (strong demon type)", "region": "Novigrad" },
     { "name": "Shaelmaar", "region": "Toussaint" },
+    { "name": "Shaelmaar from the Emperor of Nilfgaard", "region": "Nilfgaard" },
     { "name": "Cloud Giant", "region": "Skellige" },
     { "name": "Redanian Hound", "region": "Redania" },
     { "name": "Werebat", "region": "Toussaint" },
@@ -276,21 +322,17 @@
     { "name": "Mahakaman Stone Troll", "region": "Mahakam" },
     { "name": "Toad Prince", "region": "Oxenfurt" },
     { "name": "Cloud Wyvern", "region": "Skellige" },
-    {
-      "name": "Gold Dragon (e.g., Villentretenmerth)",
-      "region": "Northern Kingdoms"
-    },
     { "name": "Doppler Berserker Form", "region": "Novigrad" },
     { "name": "Koschey (Books)", "region": "Nilfgaard" },
     { "name": "Three-eyed Toads (Monster Slayer)", "region": "Velen" },
     { "name": "Flame Elemental", "region": "Novigrad" },
     { "name": "Wispwraith", "region": "Velen" },
     { "name": "Alp Matron", "region": "Toussaint" },
-    { "name": "Wight", "region": "Toussaint" },
+    { "name": "Alpha Garkain", "region": "Toussaint" },
+    { "name": "Spotted wight", "region": "Toussaint" },
     { "name": "Hoath Troll (unique troll from Gwent)", "region": "Mahakam" },
     { "name": "Pale Lady (contract beast)", "region": "Velen" },
     { "name": "Morvudd (contract beast)", "region": "Velen" },
-    { "name": "Jad Karadin (mutant creatures in TTRPG)", "region": "Redania" },
     {
       "name": "Golden Dragon",
       "region": "Northern Kingdoms",

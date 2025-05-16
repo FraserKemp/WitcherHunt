@@ -7,12 +7,14 @@ import {
   ComponentType,
   ButtonInteraction,
   EmbedBuilder,
+  ColorResolvable,
 } from "discord.js";
 import { rollRarity } from "../../utils/rollRarity";
 import { withUser } from "../commandUserWrapper";
 import { getMonstersByRarity } from "../../database/Monsters/getMonstersByRarity";
 import { UserData } from "../../types/UserTypes/UserTypes";
 import { KillItem, killItems } from "../../Enums/Items";
+import { ColorConst } from "../../constants/ColorConst";
 
 export const huntCommand = new SlashCommandBuilder()
   .setName("hunt")
@@ -23,7 +25,7 @@ const executeHunt = async (
   userData: UserData,
 ) => {
   const rarity = rollRarity();
-  console.log(rarity, "RARITY HERE");
+
   const monstersForRarityResponse = await getMonstersByRarity(
     rarity.monsterRarity,
   );
@@ -51,37 +53,42 @@ const executeHunt = async (
 
   const monster = monsterData[Math.floor(Math.random() * monsterData.length)];
 
-  console.log(monster);
-
   // TODO make different descriptions based on the monster type
-
-  const userItems = userData.inventory.items;
+  // TODO: pull into a function to which takes user data and returns the user items.
+  // Update to contain catch items and attack items
+  const userItems = userData?.inventory?.items;
   const footerTextItems = `=========Items left=========
 Rusty dagger: ${userItems.rusty_dagger} | Steel sword ${userItems.steel_sword}
 Silver sword: ${userItems.silver_sword} | Binding Stone: ${userItems.binding_stone}`;
 
+  const color = ColorConst[specialRarity ?? rarity.monsterRarity];
+
+  const monsterName = monster.name.toLowerCase().replace(" ", "_");
+  console.log(monsterName);
+
   // TODO update user region once travelling is implemented
+
   // TODO update title to ask them to pick a emoji item
+  // TODO update emoji based on user profile, I will need a property on the user for what character they have set once we have more we can unlock for now its just geralt
+
   const embed = new EmbedBuilder()
-    .setTitle(
-      `<:geralt_character:1367212610835058748> **${username}** hunted a wild ${
-        specialRarity ?? ""
-      }${monster.name}! `,
-    )
+    .setTitle("A wild monster appeared!")
     .setDescription("This beast darkens the skies. Will you attack or trap it?")
-    .setImage(`attachment://archgriffen_body.png`) // sits cleanly in the center
+    .setImage(`attachment://${monsterName}_body.png`)
     .setFooter({
       text: `Rarity: ${
         specialRarity ?? rarity.monsterRarity
       }\nType: Draconid\nCurrent region: Novigrad\nMonster region: ${
         monster.region
       }\n\n${footerTextItems}\n\nChoose an action`,
-    });
+    })
+    .setColor(color as ColorResolvable);
 
+  // TODO implement catching
   const row = new ActionRowBuilder<ButtonBuilder>().addComponents(
     new ButtonBuilder()
       .setCustomId("attack")
-      .setLabel("⚔️")
+      .setLabel("Attack️")
       .setStyle(ButtonStyle.Secondary),
     // new ButtonBuilder()
     //   .setCustomId("capture")
@@ -90,16 +97,19 @@ Silver sword: ${userItems.silver_sword} | Binding Stone: ${userItems.binding_sto
   );
 
   await interaction.reply({
-    content: `A wild **${monster.name}** appeared! (Rarity: ${monster.rarity})\nChoose your action:`,
+    content: `<:geralt_character:1368266728538374255> **${username}** hunted a wild **${
+      specialRarity ?? ""
+    }**${
+      monster.name
+    }!\nClick any of <:rusty_dagger:1366923079015465000>, <:steel_sword:1366923123621892216>, <:silver_sword:1366924519440384020>, <:binding_stone:1366924536854876271> to hunt the monster`,
     embeds: [embed],
     components: [row],
     files: [
       {
-        attachment: "src/assets/images/archgriffen_body.png",
-        name: "archgriffen_body.png",
+        attachment: `src/assets/images/${monsterName}_body.png`,
+        name: `${monsterName}_body.png`,
       },
     ],
-    ephemeral: false,
   });
 
   const message = await interaction.fetchReply();
@@ -187,6 +197,47 @@ Silver sword: ${userItems.silver_sword} | Binding Stone: ${userItems.binding_sto
         const roll = Math.random() * 100;
         const chance = item.killChances[monster.rarity];
         const killed = roll <= chance;
+        const guaranteedLoot = [];
+
+        if (killed) {
+          let rareLoot = null;
+
+          // Always drop the head
+          if (monster.loot.head && monster.loot.head.dropRate === 1) {
+            guaranteedLoot.push(monster.loot.head);
+          }
+
+          if (monster.loot.extra && monster.loot.extra.length > 0) {
+            const roll = Math.random(); // 0 to 1
+
+            const candidates = monster.loot.extra.filter(
+              (item) => roll <= item.dropRate,
+            );
+
+            if (candidates.length > 0) {
+              // Pick the rarest one
+              rareLoot = candidates.reduce((lowest, item) =>
+                item.dropRate < lowest.dropRate ? item : lowest,
+              );
+            }
+          }
+
+          console.log(guaranteedLoot, "GUARANTEED LOOT");
+          console.log(rareLoot, "RARE LOOT");
+
+          // Bundle the loot
+          const drops = [...guaranteedLoot];
+          if (rareLoot) drops.push(rareLoot);
+
+          const dropList = drops.map((d) => `• ${d.name}`).join("\n");
+
+          console.log(dropList);
+
+          // updatedEmbed.addFields({
+          //   name: "🧳 Loot",
+          //   value: dropList || "Nothing but coins and gore.",
+          // });
+        }
 
         const resultButton = new ButtonBuilder()
           .setCustomId("result")

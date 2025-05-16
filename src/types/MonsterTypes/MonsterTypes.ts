@@ -32,14 +32,17 @@ export type Region =
   | "Redania"
   | "Undiscovered";
 
+type LootItem = {
+  baseValue: number;
+  name: string; // e.g. "Warg Head"
+  dropRate: number; // % chance to get head on kill
+  description?: string;
+  imageUrl?: string;
+};
+
 type MonsterLoot = {
-  head?: {
-    baseValue: number;
-    name: string; // e.g. "Warg Head"
-    description?: string;
-    imageUrl?: string;
-    dropRate?: number; // % chance to get head on kill
-  };
+  head: LootItem;
+  extra?: LootItem[];
 };
 
 export interface Monster {
@@ -57,4 +60,5 @@ export interface Monster {
   type: MonsterType[];
   region: Region; // Where it originates from (affects currency)
   loot: MonsterLoot;
+  description?: string;
 }

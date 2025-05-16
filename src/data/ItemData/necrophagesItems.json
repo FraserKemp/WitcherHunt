@@ -1,0 +1,98 @@
+{
+  "necrophageItems": [
+    {
+      "baseValue": 3000,
+      "description": "Drowner brain tissue is obtained from drowner carcasses.",
+      "dropRate": 0.3,
+      "name": "Drowner brain"
+    },
+    {
+      "baseValue": 4000,
+      "description": "Drowned tongue is obtained from the carcasses of the drowned dead.",
+      "dropRate": 0.2,
+      "name": "Drowned tongue"
+    },
+    {
+      "baseValue": 3000,
+      "description": "Alchemical ingredient from a ghoul carcasses.",
+      "dropRate": 0.3,
+      "name": "Ghoul blood"
+    },
+    {
+      "baseValue": 3000,
+      "description": "Alchemical ingredient from a Alghoul carcasses.",
+      "dropRate": 0.3,
+      "name": "Alghoul marrow"
+    },
+    {
+      "baseValue": 3000,
+      "description": "An ear ripped off a Grave hag's carcass.",
+      "dropRate": 0.3,
+      "name": "Grave hag's ear"
+    },
+    {
+      "baseValue": 3000,
+      "dropRate": 0.3,
+      "name": "Necrophage eyes"
+    },
+    {
+      "baseValue": 15000,
+      "description": "A mutagen is an alchemy ingredient.",
+      "dropRate": 0.2,
+      "name": "Mourntart mutagen"
+    },
+    {
+      "baseValue": 3000,
+      "dropRate": 0.3,
+      "name": "Water hag tooth"
+    },
+    {
+      "baseValue": 3000,
+      "dropRate": 0.3,
+      "name": "Necrophage blood"
+    },
+    {
+      "baseValue": 4000,
+      "dropRate": 0.2,
+      "name": "Garkain saliva"
+    },
+    {
+      "baseValue": 3000,
+      "dropRate": 0.3,
+      "name": "Foglet teeth"
+    },
+    {
+      "baseValue": 50000,
+      "dropRate": 0.05,
+      "name": "Ignis Fatuus heart"
+    },
+    {
+      "baseValue": 6000,
+      "dropRate": 0.2,
+      "name": "Nekker warrior's liver"
+    },
+    {
+      "baseValue": 3000,
+      "dropRate": 0.3,
+      "name": "Wight ear"
+    },
+    {
+      "baseValue": 6000,
+      "dropRate": 0.2,
+      "name": "Wight hair"
+    }
+  ],
+  "spectersItems": [
+    {
+      "baseValue": 10000,
+      "dropRate": 0.05,
+      "name": "Death dust"
+    },
+    {
+      "baseValue": 4000,
+      "dropRate": 0.2,
+      "name": "Essence of wraith",
+      "note": "It is needed to craft the following items:\nSuperior elementa oil\nReliever's decoction\nEnhanced specter oil\nSuperior specter oil"
+    }
+  ]
+}
