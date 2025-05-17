@@ -15,6 +15,7 @@ import { getMonstersByRarity } from "../../database/Monsters/getMonstersByRarity
 import { UserData } from "../../types/UserTypes/UserTypes";
 import { KillItem, killItems } from "../../Enums/Items";
 import { ColorConst } from "../../constants/ColorConst";
+import { huntAttack } from "./huntAttack";
 
 export const huntCommand = new SlashCommandBuilder()
   .setName("hunt")
@@ -101,7 +102,7 @@ Silver sword: ${userItems.silver_sword} | Binding Stone: ${userItems.binding_sto
       specialRarity ?? ""
     }**${
       monster.name
-    }!\nClick any of <:rusty_dagger:1366923079015465000>, <:steel_sword:1366923123621892216>, <:silver_sword:1366924519440384020>, <:binding_stone:1366924536854876271> to hunt the monster`,
+    }!\nClick any of <:rusty_dagger:1366923079015465000> \`rd\`, <:steel_sword:1366923123621892216> \`ss\`, <:silver_sword:1366924519440384020> \`SS\`, <:binding_stone:1366924536854876271> \`bs\` to hunt the monster`,
     embeds: [embed],
     components: [row],
     files: [
@@ -130,137 +131,7 @@ Silver sword: ${userItems.silver_sword} | Binding Stone: ${userItems.binding_sto
     }
 
     if (btnInteraction.customId === "attack") {
-      const itemOrder = [
-        "rusty_dagger",
-        "steel_sword",
-        "silver_sword",
-        "binding_stone",
-      ];
-
-      const availableItems = Object.entries(userData.inventory.items)
-        .filter(([itemId, count]) => count > 0 && itemOrder.includes(itemId)) // keep only valid items in desired order
-        .map(([itemId]) => killItems[itemId])
-        .sort((a, b) => itemOrder.indexOf(a.id) - itemOrder.indexOf(b.id));
-
-      if (availableItems.length === 0) {
-        return await btnInteraction.update({
-          content: "You don’t have any items to attack with!",
-          components: [],
-        });
-      }
-
-      const buttons = availableItems.map((item) =>
-        new ButtonBuilder()
-          .setCustomId(`${item.id}`)
-          .setEmoji(item.emoji)
-          .setStyle(ButtonStyle.Secondary),
-      );
-
-      const row = new ActionRowBuilder<ButtonBuilder>().addComponents(
-        ...buttons,
-      );
-
-      await btnInteraction.update({
-        content: "🗡️ Choose your item to attack with:",
-        components: [row],
-      });
-
-      const itemCollector =
-        btnInteraction.message.createMessageComponentCollector({
-          componentType: ComponentType.Button,
-          time: 15000,
-          max: 1,
-        });
-
-      itemCollector.on("collect", async (itemInteraction) => {
-        if (itemInteraction.user.id !== interaction.user.id) {
-          return itemInteraction.reply({
-            content: "This isn’t your hunt!",
-            ephemeral: true,
-          });
-        }
-
-        const item: KillItem = killItems[itemInteraction.customId];
-
-        if (!item) {
-          return itemInteraction.reply({
-            content: "Invalid item selected.",
-            ephemeral: true,
-          });
-        }
-
-        // Decrement inventory here if you're saving to DB
-        // await updateUserInventory(...)
-
-        // used item item.name
-
-        const roll = Math.random() * 100;
-        const chance = item.killChances[monster.rarity];
-        const killed = roll <= chance;
-        const guaranteedLoot = [];
-
-        if (killed) {
-          let rareLoot = null;
-
-          // Always drop the head
-          if (monster.loot.head && monster.loot.head.dropRate === 1) {
-            guaranteedLoot.push(monster.loot.head);
-          }
-
-          if (monster.loot.extra && monster.loot.extra.length > 0) {
-            const roll = Math.random(); // 0 to 1
-
-            const candidates = monster.loot.extra.filter(
-              (item) => roll <= item.dropRate,
-            );
-
-            if (candidates.length > 0) {
-              // Pick the rarest one
-              rareLoot = candidates.reduce((lowest, item) =>
-                item.dropRate < lowest.dropRate ? item : lowest,
-              );
-            }
-          }
-
-          console.log(guaranteedLoot, "GUARANTEED LOOT");
-          console.log(rareLoot, "RARE LOOT");
-
-          // Bundle the loot
-          const drops = [...guaranteedLoot];
-          if (rareLoot) drops.push(rareLoot);
-
-          const dropList = drops.map((d) => `• ${d.name}`).join("\n");
-
-          console.log(dropList);
-
-          // updatedEmbed.addFields({
-          //   name: "🧳 Loot",
-          //   value: dropList || "Nothing but coins and gore.",
-          // });
-        }
-
-        const resultButton = new ButtonBuilder()
-          .setCustomId("result")
-          .setEmoji(killed ? "✅" : "❌")
-          .setStyle(ButtonStyle.Secondary);
-
-        const resultRow = new ActionRowBuilder<ButtonBuilder>().addComponents(
-          resultButton,
-        );
-
-        const updatedEmbed = EmbedBuilder.from(embed)
-          .setTitle(killed ? "✅ Monster Defeated!" : "❌ Monster Escaped!")
-          .setDescription(
-            killed
-              ? `${item.name} landed the blow. The ${monster.name} is now dead!`
-              : `${item.name} missed — the monster got away!`,
-          );
-
-        await itemInteraction.update({
-          embeds: [updatedEmbed],
-          components: [resultRow],
-        });
-      });
+      await huntAttack(embed, btnInteraction, interaction, userData, monster);
     }
   });
 
