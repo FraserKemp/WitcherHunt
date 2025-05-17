@@ -64,7 +64,7 @@ Silver sword: ${userItems.silver_sword} | Binding Stone: ${userItems.binding_sto
 
   const color = ColorConst[specialRarity ?? rarity.monsterRarity];
 
-  const monsterName = monster.name.toLowerCase().replace(" ", "_");
+  const monsterName = monster.name.toLowerCase().replace(/\s+/g, "_");
   console.log(monsterName);
 
   // TODO update user region once travelling is implemented
@@ -125,7 +125,6 @@ Silver sword: ${userItems.silver_sword} | Binding Stone: ${userItems.binding_sto
     if (btnInteraction.user.id !== interaction.user.id) {
       await btnInteraction.reply({
         content: "This isn’t your hunt!",
-        ephemeral: true,
       });
       return;
     }
