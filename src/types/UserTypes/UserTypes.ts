@@ -1,9 +1,9 @@
-interface Items {
+export type Items = {
   rusty_dagger: number;
   steel_sword: number;
   silver_sword: number;
   binding_stone: number;
-}
+};
 
 type Companion = {
   monsterId: string;
@@ -36,17 +36,18 @@ type CapturedMonster = {
   statsOverride?: MonsterStatsOverride; // optional overrides for stats
 };
 
-interface Inventory {
+type Inventory = {
   monsterHeads: Record<string, number>; // monsterId -> quantity
   capturedMonsters: Record<string, CapturedMonster>;
   items: Items;
-}
+};
 
-interface Stats {
+type Stats = {
   kills: number;
   captures: number;
   huntsCompleted: number;
-}
+  totalHunts: number;
+};
 
 export interface UserData {
   stats: Stats;

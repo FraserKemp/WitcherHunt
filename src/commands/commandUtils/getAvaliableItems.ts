@@ -1,7 +1,7 @@
 import { killItems } from "../../Enums/Items";
 import { UserData } from "../../types/UserTypes/UserTypes";
 
-export const getAvailableItems = (userData: UserData) => {
+export const getAvailableKillItems = (userData: UserData) => {
   const itemOrder = [
     "rusty_dagger",
     "steel_sword",

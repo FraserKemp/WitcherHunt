@@ -13,7 +13,6 @@ import { rollRarity } from "../../utils/rollRarity";
 import { withUser } from "../commandUserWrapper";
 import { getMonstersByRarity } from "../../database/Monsters/getMonstersByRarity";
 import { UserData } from "../../types/UserTypes/UserTypes";
-import { KillItem, killItems } from "../../Enums/Items";
 import { ColorConst } from "../../constants/ColorConst";
 import { huntAttack } from "./huntAttack";
 

@@ -5,10 +5,11 @@ export const defaultUserData: UserData = {
     kills: 0,
     captures: 0,
     huntsCompleted: 0,
+    totalHunts: 0,
   },
   inventory: {
-    monsterHeads: {}, // Initially empty map
-    capturedMonsters: {}, // Initially empty map
+    monsterHeads: {}, // This may need to be configured better later
+    capturedMonsters: {},
     items: {
       rusty_dagger: 10,
       steel_sword: 10,
@@ -21,13 +22,14 @@ export const defaultUserData: UserData = {
 };
 
 export const getDynamoUserData = (userId: string, username: string) => ({
-  userId: { S: userId }, // userId as a string
+  userId: { S: userId },
   username: { S: username },
   stats: {
     M: {
       kills: { N: String(defaultUserData.stats.kills) }, // kills as a number
-      captures: { N: String(defaultUserData.stats.captures) }, // captures as a number
-      huntsCompleted: { N: String(defaultUserData.stats.huntsCompleted) }, // huntsCompleted as a number
+      captures: { N: String(defaultUserData.stats.captures) },
+      huntsCompleted: { N: String(defaultUserData.stats.huntsCompleted) },
+      totalHunts: { N: String(defaultUserData.stats.totalHunts) },
     },
   },
   inventory: {

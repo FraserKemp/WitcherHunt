@@ -11,7 +11,10 @@ import {
 import { Monster } from "../../types/MonsterTypes/MonsterTypes";
 import { UserData } from "../../types/UserTypes/UserTypes";
 import { handleKilledMonster } from "./handleKilledMonster";
-import { getAvailableItems } from "../commandUtils/getAvaliableItems";
+import { getAvailableKillItems } from "../commandUtils/getAvaliableItems";
+import { decrementUserInteractionItem } from "../../database/Items/decrementUserInteractionItem";
+import { incrementMultipleUserStats } from "../../database/UserProfile/incrementUserStats";
+import { StatKey } from "../../types/UserTypes/UserStatTypes";
 
 export const huntAttack = async (
   embed: EmbedBuilder,
@@ -20,7 +23,7 @@ export const huntAttack = async (
   userData: UserData,
   monster: Monster,
 ): Promise<void> => {
-  const availableItems = getAvailableItems(userData);
+  const availableItems = getAvailableKillItems(userData);
 
   if (availableItems.length === 0) {
     await btnInteraction.update({
@@ -50,7 +53,8 @@ export const huntAttack = async (
   });
 
   itemCollector.on("collect", async (itemInteraction) => {
-    if (itemInteraction.user.id !== interaction.user.id) {
+    const userId = interaction.user.id;
+    if (itemInteraction.user.id !== userId) {
       return itemInteraction.reply({
         content: "This isn’t your hunt!",
         ephemeral: true,
@@ -66,18 +70,21 @@ export const huntAttack = async (
       });
     }
 
-    // Decrement inventory here if you're saving to DB
-    // await updateUserInventory(...)
-
-    // used item item.name
+    await decrementUserInteractionItem(userId, item.id);
 
     const roll = Math.random() * 100;
     const chance = item.killChances[monster.rarity];
     const killed = roll <= chance;
 
+    const statsToUpdate: StatKey[] = ["huntsCompleted", "totalHunts"];
+
     if (killed) {
+      statsToUpdate.push("kills");
       await handleKilledMonster(monster);
     }
+
+    // Update the users profile with their stats for this hunt.
+    await incrementMultipleUserStats(userId, statsToUpdate);
 
     const resultButton = new ButtonBuilder()
       .setCustomId("result")
