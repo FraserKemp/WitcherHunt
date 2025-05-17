@@ -90,8 +90,9 @@ export const huntAttack = async (
 
     const updatedEmbed = EmbedBuilder.from(embed)
       .setAuthor({
-        name: "Monster Defeated!",
-        iconURL: "https://your-host.com/images/witcher_medallion.png",
+        name: "Monster Defeated! here",
+        iconURL:
+          "https://raw.githubusercontent.com/FraserKemp/WitcherHunt/main/src/assets/images/witcher_success.png",
       })
       .setTitle(killed ? "Monster Defeated!" : "Monster Escaped!")
       .setDescription(
