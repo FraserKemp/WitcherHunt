@@ -12,7 +12,7 @@ export const defaultUserData: UserData = {
     capturedMonsters: {},
     items: {
       rusty_dagger: 10,
-      steel_sword: 10,
+      runed_steel_blades: 10,
       silver_sword: 5,
       binding_stone: 1,
     },
@@ -64,8 +64,8 @@ export const getDynamoUserData = (userId: string, username: string) => ({
           rusty_dagger: {
             N: String(defaultUserData.inventory.items.rusty_dagger),
           }, // nets as a number
-          steel_sword: {
-            N: String(defaultUserData.inventory.items.steel_sword),
+          runed_steel_blades: {
+            N: String(defaultUserData.inventory.items.runed_steel_blades),
           },
           silver_sword: {
             N: String(defaultUserData.inventory.items.silver_sword),

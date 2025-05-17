@@ -4,7 +4,7 @@ import { UserData } from "../../types/UserTypes/UserTypes";
 export const getAvailableKillItems = (userData: UserData) => {
   const itemOrder = [
     "rusty_dagger",
-    "steel_sword",
+    "runed_steel_blades",
     "silver_sword",
     "binding_stone",
   ];

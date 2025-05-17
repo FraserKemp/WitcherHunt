@@ -58,7 +58,7 @@ const executeHunt = async (
   // Update to contain catch items and attack items
   const userItems = userData?.inventory?.items;
   const footerTextItems = `=========Items left=========
-Rusty dagger: ${userItems.rusty_dagger} | Steel sword ${userItems.steel_sword}
+Rusty dagger: ${userItems.rusty_dagger} | Runed Steel Blades ${userItems.runed_steel_blades}
 Silver sword: ${userItems.silver_sword} | Binding Stone: ${userItems.binding_stone}`;
 
   const color = ColorConst[specialRarity ?? rarity.monsterRarity];
@@ -96,12 +96,10 @@ Silver sword: ${userItems.silver_sword} | Binding Stone: ${userItems.binding_sto
     //   .setStyle(ButtonStyle.Secondary),
   );
 
+  const monsterNameAndRarity = `${specialRarity ?? ""}${monster.name}`;
+
   await interaction.reply({
-    content: `<:geralt_character:1368266728538374255> **${username}** hunted a wild **${
-      specialRarity ?? ""
-    }**${
-      monster.name
-    }!\nClick any of <:rusty_dagger:1366923079015465000> \`rd\`, <:steel_sword:1366923123621892216> \`ss\`, <:silver_sword:1366924519440384020> \`SS\`, <:binding_stone:1366924536854876271> \`bs\` to hunt the monster`,
+    content: `<:geralt_character:1368266728538374255> **${username}** hunted a wild **${monsterNameAndRarity}!**\nClick any of <:rusty_dagger:1366923079015465000> \`rd\`, <:runed_steel_blades:1373242183586549884> \`rsb\`,<:silver_sword:1366924519440384020> \`ss\`,\n<:binding_stone:1366924536854876271> \`bs\` to hunt the monster`,
     embeds: [embed],
     components: [row],
     files: [

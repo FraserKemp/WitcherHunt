@@ -1,6 +1,6 @@
 export type Items = {
   rusty_dagger: number;
-  steel_sword: number;
+  runed_steel_blades: number;
   silver_sword: number;
   binding_stone: number;
 };
