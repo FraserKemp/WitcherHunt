@@ -25,7 +25,6 @@ const executeHunt = async (
   userData: UserData,
 ) => {
   const rarity = rollRarity();
-
   const monstersForRarityResponse = await getMonstersByRarity(
     rarity.monsterRarity,
   );
@@ -55,7 +54,7 @@ const executeHunt = async (
 
   // TODO make different descriptions based on the monster type
   // TODO: pull into a function to which takes user data and returns the user items.
-  // Update to contain catch items and attack items
+  // Update to contain catch items and attack items so we know what items we have so we can make a decision if we want to catch or not
   const userItems = userData?.inventory?.items;
   const footerTextItems = `=========Items left=========
 Rusty dagger: ${userItems.rusty_dagger} | Runed Steel Blades ${userItems.runed_steel_blades}
@@ -63,13 +62,10 @@ Silver sword: ${userItems.silver_sword} | Binding Stone: ${userItems.binding_sto
 
   const color = ColorConst[specialRarity ?? rarity.monsterRarity];
 
+  // create the monster name, so we can reference is from the assets folder
   const monsterName = monster.name.toLowerCase().replace(/\s+/g, "_");
-  console.log(monsterName);
 
   // TODO update user region once travelling is implemented
-
-  // TODO update title to ask them to pick a emoji item
-  // TODO update emoji based on user profile, I will need a property on the user for what character they have set once we have more we can unlock for now its just geralt
 
   const embed = new EmbedBuilder()
     .setTitle("A wild monster appeared!")
@@ -85,6 +81,8 @@ Silver sword: ${userItems.silver_sword} | Binding Stone: ${userItems.binding_sto
     .setColor(color as ColorResolvable);
 
   // TODO implement catching
+
+  // Sets up the button actions we can use on the embed. This is used later to handle which interaction the user is doing
   const row = new ActionRowBuilder<ButtonBuilder>().addComponents(
     new ButtonBuilder()
       .setCustomId("attack")
@@ -98,6 +96,7 @@ Silver sword: ${userItems.silver_sword} | Binding Stone: ${userItems.binding_sto
 
   const monsterNameAndRarity = `${specialRarity ?? ""}${monster.name}`;
 
+  // This handles showing the image and the 'embed' text we set up above and the buttons 'row' we set up above
   await interaction.reply({
     content: `<:geralt_character:1368266728538374255> **${username}** hunted a wild **${monsterNameAndRarity}!**\nClick any of <:rusty_dagger:1366923079015465000> \`rd\`, <:runed_steel_blades:1373242183586549884> \`rsb\`,<:silver_sword:1366924519440384020> \`ss\`,\n<:binding_stone:1366924536854876271> \`bs\` to hunt the monster`,
     embeds: [embed],
@@ -112,6 +111,7 @@ Silver sword: ${userItems.silver_sword} | Binding Stone: ${userItems.binding_sto
 
   const message = await interaction.fetchReply();
 
+  // Create a listener to trigger the correct code flow once the user has selected.
   const collector = message.createMessageComponentCollector({
     componentType: ComponentType.Button,
     time: 15000, // 15s window to choose
@@ -128,6 +128,8 @@ Silver sword: ${userItems.silver_sword} | Binding Stone: ${userItems.binding_sto
 
     if (btnInteraction.customId === "attack") {
       await huntAttack(embed, btnInteraction, interaction, userData, monster);
+    } else if (btnInteraction.customId === "capture") {
+      // TODO: CB implement catching here
     }
   });
 

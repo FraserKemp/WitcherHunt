@@ -1,6 +1,7 @@
 import { killItems } from "../../Enums/Items";
 import { UserData } from "../../types/UserTypes/UserTypes";
 
+// TODO: create an item name enum so we can use that everywhere. This means we only have to
 export const getAvailableKillItems = (userData: UserData) => {
   const itemOrder = [
     "rusty_dagger",
