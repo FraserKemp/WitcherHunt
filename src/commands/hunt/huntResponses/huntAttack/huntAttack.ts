@@ -1,4 +1,4 @@
-import { KillItem, killItems } from "../../Enums/Items";
+import { KillItem, killItems } from "../../../../Enums/Items";
 import {
   ActionRowBuilder,
   ButtonBuilder,
@@ -8,13 +8,13 @@ import {
   ComponentType,
   EmbedBuilder,
 } from "discord.js";
-import { Monster } from "../../types/MonsterTypes/MonsterTypes";
-import { UserData } from "../../types/UserTypes/UserTypes";
+import { Monster } from "../../../../types/MonsterTypes/MonsterTypes";
+import { UserData } from "../../../../types/UserTypes/UserTypes";
 import { handleKilledMonster } from "./handleKilledMonster";
-import { getAvailableKillItems } from "../commandUtils/getAvaliableItems";
-import { decrementUserInteractionItem } from "../../database/Items/decrementUserInteractionItem";
-import { incrementMultipleUserStats } from "../../database/UserProfile/incrementUserStats";
-import { StatKey } from "../../types/UserTypes/UserStatTypes";
+import { getAvailableKillItems } from "../../../commandUtils/getAvaliableItems";
+import { decrementUserInteractionItem } from "../../../../database/Items/decrementUserInteractionItem";
+import { incrementMultipleUserStats } from "../../../../database/UserProfile/incrementUserStats";
+import { StatKey } from "../../../../types/UserTypes/UserStatTypes";
 
 export const huntAttack = async (
   embed: EmbedBuilder,

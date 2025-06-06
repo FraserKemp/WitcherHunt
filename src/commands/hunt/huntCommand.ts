@@ -14,7 +14,7 @@ import { withUser } from "../commandUserWrapper";
 import { getMonstersByRarity } from "../../database/Monsters/getMonstersByRarity";
 import { UserData } from "../../types/UserTypes/UserTypes";
 import { ColorConst } from "../../constants/ColorConst";
-import { huntAttack } from "./huntAttack";
+import { huntAttack } from "./huntResponses/huntAttack/huntAttack";
 
 export const huntCommand = new SlashCommandBuilder()
   .setName("hunt")

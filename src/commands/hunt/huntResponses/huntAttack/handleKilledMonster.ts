@@ -1,4 +1,4 @@
-import { Monster } from "../../types/MonsterTypes/MonsterTypes";
+import { Monster } from "../../../../types/MonsterTypes/MonsterTypes";
 
 export const handleKilledMonster = async (monster: Monster) => {
   const guaranteedLoot = [];
@@ -34,6 +34,8 @@ export const handleKilledMonster = async (monster: Monster) => {
   const dropList = drops.map((d) => `• ${d.name}`).join("\n");
 
   console.log(dropList);
+
+  // TODO update the embed with the extra loot you got including the heads
 
   // updatedEmbed.addFields({
   //   name: "🧳 Loot",
