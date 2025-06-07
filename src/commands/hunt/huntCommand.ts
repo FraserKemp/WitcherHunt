@@ -15,6 +15,7 @@ import { getMonstersByRarity } from "../../database/Monsters/getMonstersByRarity
 import { UserData } from "../../types/UserTypes/UserTypes";
 import { ColorConst } from "../../constants/ColorConst";
 import { huntAttack } from "./huntResponses/huntAttack/huntAttack";
+import { generateFooterText } from "./huntResponses/huntHelpers/generateFooterText";
 
 export const huntCommand = new SlashCommandBuilder()
   .setName("hunt")
@@ -53,12 +54,8 @@ const executeHunt = async (
   const monster = monsterData[Math.floor(Math.random() * monsterData.length)];
 
   // TODO make different descriptions based on the monster type
-  // TODO: pull into a function to which takes user data and returns the user items.
   // Update to contain catch items and attack items so we know what items we have so we can make a decision if we want to catch or not
-  const userItems = userData?.inventory?.items;
-  const footerTextItems = `=========Items left=========
-Rusty dagger: ${userItems.rusty_dagger} | Runed Steel Blades ${userItems.runed_steel_blades}
-Silver sword: ${userItems.silver_sword} | Binding Stone: ${userItems.binding_stone}`;
+  const footerTextItems = generateFooterText(userData)
 
   const color = ColorConst[specialRarity ?? rarity.monsterRarity];
 
