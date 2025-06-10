@@ -11,10 +11,18 @@ export const defaultUserData: UserData = {
     monsterHeads: {}, // This may need to be configured better later
     capturedMonsters: {},
     items: {
-      rusty_dagger: 10,
-      runed_steel_blades: 10,
-      silver_sword: 5,
-      binding_stone: 1,
+      killItems: {
+        rusty_dagger: 10,
+        runed_steel_blades: 10,
+        silver_sword: 5,
+        binding_stone: 1,
+      },
+      captureItems: {
+        dimeritium_trap: 10,
+        moon_dust: 10,
+        snare_trap: 5,
+        yrden_trap: 1,
+      },
     },
   },
   createdAt: new Date().toISOString(),
@@ -61,17 +69,53 @@ export const getDynamoUserData = (userId: string, username: string) => ({
       },
       items: {
         M: {
-          rusty_dagger: {
-            N: String(defaultUserData.inventory.items.rusty_dagger),
-          }, // nets as a number
-          runed_steel_blades: {
-            N: String(defaultUserData.inventory.items.runed_steel_blades),
+          killItems: {
+            M: {
+              rusty_dagger: {
+                N: String(
+                  defaultUserData.inventory.items.killItems.rusty_dagger,
+                ),
+              },
+              runed_steel_blades: {
+                N: String(
+                  defaultUserData.inventory.items.killItems.runed_steel_blades,
+                ),
+              },
+              silver_sword: {
+                N: String(
+                  defaultUserData.inventory.items.killItems.silver_sword,
+                ),
+              },
+              binding_stone: {
+                N: String(
+                  defaultUserData.inventory.items.killItems.binding_stone,
+                ),
+              },
+            },
           },
-          silver_sword: {
-            N: String(defaultUserData.inventory.items.silver_sword),
-          },
-          binding_stone: {
-            N: String(defaultUserData.inventory.items.binding_stone),
+          captureItems: {
+            M: {
+              dimeritium_trap: {
+                N: String(
+                  defaultUserData.inventory.items.captureItems.dimeritium_trap,
+                ),
+              },
+              moon_dust: {
+                N: String(
+                  defaultUserData.inventory.items.captureItems.moon_dust,
+                ),
+              },
+              snare_trap: {
+                N: String(
+                  defaultUserData.inventory.items.captureItems.snare_trap,
+                ),
+              },
+              yrden_trap: {
+                N: String(
+                  defaultUserData.inventory.items.captureItems.yrden_trap,
+                ),
+              },
+            },
           },
         },
       },

@@ -1,8 +1,16 @@
 export type Items = {
-  rusty_dagger: number;
-  runed_steel_blades: number;
-  silver_sword: number;
-  binding_stone: number;
+  killItems: {
+    rusty_dagger: number;
+    runed_steel_blades: number;
+    silver_sword: number;
+    binding_stone: number;
+  };
+  captureItems: {
+    snare_trap: number;
+    moon_dust: number;
+    yrden_trap: number;
+    dimeritium_trap: number;
+  };
 };
 
 type Companion = {

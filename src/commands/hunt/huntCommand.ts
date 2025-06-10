@@ -15,7 +15,8 @@ import { getMonstersByRarity } from "../../database/Monsters/getMonstersByRarity
 import { UserData } from "../../types/UserTypes/UserTypes";
 import { ColorConst } from "../../constants/ColorConst";
 import { huntAttack } from "./huntResponses/huntAttack/huntAttack";
-import { generateFooterText } from "./huntResponses/huntHelpers/generateFooterText";
+import { generateFooterText } from "./huntHelpers/generateFooterText";
+import { huntCapture } from "./huntResponses/huntCapture/huntCapture";
 
 export const huntCommand = new SlashCommandBuilder()
   .setName("hunt")
@@ -55,7 +56,7 @@ const executeHunt = async (
 
   // TODO make different descriptions based on the monster type
   // Update to contain catch items and attack items so we know what items we have so we can make a decision if we want to catch or not
-  const footerTextItems = generateFooterText(userData)
+  const footerTextItems = generateFooterText(userData);
 
   const color = ColorConst[specialRarity ?? rarity.monsterRarity];
 
@@ -85,10 +86,10 @@ const executeHunt = async (
       .setCustomId("attack")
       .setLabel("Attack️")
       .setStyle(ButtonStyle.Secondary),
-    // new ButtonBuilder()
-    //   .setCustomId("capture")
-    //   .setLabel("🪢")
-    //   .setStyle(ButtonStyle.Secondary),
+    new ButtonBuilder()
+      .setCustomId("capture")
+      .setLabel("Capture")
+      .setStyle(ButtonStyle.Secondary),
   );
 
   const monsterNameAndRarity = `${specialRarity ?? ""}${monster.name}`;
@@ -126,7 +127,7 @@ const executeHunt = async (
     if (btnInteraction.customId === "attack") {
       await huntAttack(embed, btnInteraction, interaction, userData, monster);
     } else if (btnInteraction.customId === "capture") {
-      // TODO: CB implement catching here
+      await huntCapture(embed, btnInteraction, interaction, userData, monster);
     }
   });
 
